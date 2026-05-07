@@ -1,0 +1,53 @@
+{
+  "dashboard": {
+    "title": "Real-time Banking Transactions",
+    "tags": ["banking", "realtime", "streaming"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Transactions par seconde",
+        "type": "graph",
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "Montant moyen des transactions",
+        "type": "gauge",
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Alertes fraude",
+        "type": "stat",
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        }
+      },
+      {
+        "id": 4,
+        "title": "Top Merchants",
+        "type": "piechart",
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.venv/
+venv/
+env/
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs / runtime
+*.log
+*.tmp
+*.temp
+
+# Environment / secrets
+.env
+*.csv
+.env.*
+!.env.example
+
+# Notebook checkpoints
+.ipynb_checkpoints/
