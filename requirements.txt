@@ -1,6 +1,5 @@
-kafka-python==2.0.2
+kafka-python>=2.0.2
 psycopg2-binary==2.9.6
-pyspark==3.3.0
 pandas==1.5.3
 numpy==1.24.3
 requests==2.31.0

@@ -5,6 +5,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY producer/transaction_producer.py .
+COPY consumers/postgres_consumer.py .
 
-CMD ["python", "-u", "transaction_producer.py"]
+CMD ["python", "-u", "postgres_consumer.py"]

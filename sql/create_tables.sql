@@ -1,6 +1,3 @@
--- Créer la base de données
-CREATE DATABASE IF NOT EXISTS banking_db;
-
 -- Créer la table des transactions
 CREATE TABLE IF NOT EXISTS transactions (
     id SERIAL PRIMARY KEY,

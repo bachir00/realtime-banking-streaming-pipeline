@@ -1,45 +1,75 @@
 import json
+import os
 import random
 import time
 from datetime import datetime
 from kafka import KafkaProducer
 
-# Configuration Kafka
-KAFKA_BROKERS = ['kafka:9092']
-KAFKA_TOPIC = 'transactions'
+KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', 'localhost:9092')
+KAFKA_TOPIC = os.environ.get('KAFKA_TOPIC', 'transactions')
+TRANSACTION_INTERVAL = float(os.environ.get('TRANSACTION_INTERVAL_SEC', '1'))
 
-def generate_fake_transaction():
-    """Génère une transaction bancaire fake"""
-    transaction = {
-        'transaction_id': random.randint(100000, 999999),
+MERCHANTS = ['Amazon', 'Walmart', 'Starbucks', 'McDonald', 'Apple', 'Target']
+LOCATIONS = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']
+TRANSACTION_TYPES = ['online', 'offline', 'atm']
+
+
+def generate_transaction():
+    return {
+        'transaction_id': random.randint(1, 2_000_000_000),
         'account_id': random.randint(1000, 9999),
         'amount': round(random.uniform(10, 5000), 2),
-        'merchant': random.choice(['Amazon', 'Walmart', 'Starbucks', 'McDonald', 'Apple', 'Target']),
+        'merchant': random.choice(MERCHANTS),
         'timestamp': datetime.now().isoformat(),
-        'location': random.choice(['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']),
-        'transaction_type': random.choice(['online', 'offline', 'atm']),
+        'location': random.choice(LOCATIONS),
+        'transaction_type': random.choice(TRANSACTION_TYPES),
     }
-    return transaction
+
+
+def create_producer():
+    for attempt in range(30):
+        try:
+            print(f"Tentative de connexion {attempt + 1}/30...")
+            producer = KafkaProducer(
+                bootstrap_servers=KAFKA_BROKERS,
+                value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+                request_timeout_ms=5000
+            )
+            print("✓ Connecté à Kafka!")
+            return producer
+        except Exception as e:
+            print(f"Erreur: {e}")
+            if attempt < 29:
+                time.sleep(1)
+    return None
+
 
 def main():
-    """Produit les transactions vers Kafka"""
-    producer = KafkaProducer(
-        bootstrap_servers=KAFKA_BROKERS,
-        value_serializer=lambda v: json.dumps(v).encode('utf-8')
-    )
-    
-    print("Producer démarré. Génération de transactions...")
-    
+    producer = create_producer()
+    if not producer:
+        print("Impossible de se connecter à Kafka après 30 tentatives")
+        return
+
+    print(f"Producer démarré — topic: {KAFKA_TOPIC}, interval: {TRANSACTION_INTERVAL}s")
+    count = 0
+
     try:
         while True:
-            transaction = generate_fake_transaction()
-            producer.send(KAFKA_TOPIC, value=transaction)
-            print(f"Transaction produite: {transaction['transaction_id']}")
-            time.sleep(1)  # Une transaction par seconde
+            transaction = generate_transaction()
+            try:
+                future = producer.send(KAFKA_TOPIC, value=transaction)
+                future.get(timeout=5)
+                count += 1
+                if count % 5 == 0:
+                    print(f"✓ {count} transactions produites")
+            except Exception as e:
+                print(f"Erreur d'envoi: {e}")
+            time.sleep(TRANSACTION_INTERVAL)
     except KeyboardInterrupt:
-        print("Producer arrêté")
+        print("\nProducer arrêté")
     finally:
         producer.close()
+
 
 if __name__ == '__main__':
     main()

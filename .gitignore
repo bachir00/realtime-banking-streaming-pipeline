@@ -36,6 +36,7 @@ Thumbs.db
 # Environment / secrets
 .env
 *.csv
+test.*
 .env.*
 !.env.example
 
