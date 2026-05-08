@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType
 
-KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', 'localhost:9092')
+KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', '')
 KAFKA_TOPIC = os.environ.get('KAFKA_TOPIC', 'transactions')
 
 SCHEMA = StructType([

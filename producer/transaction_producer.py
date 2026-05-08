@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 from kafka import KafkaProducer
 
-KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', 'localhost:9092')
+KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', '')
 KAFKA_TOPIC = os.environ.get('KAFKA_TOPIC', 'transactions')
 TRANSACTION_INTERVAL = float(os.environ.get('TRANSACTION_INTERVAL_SEC', '1'))
 

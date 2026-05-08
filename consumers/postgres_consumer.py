@@ -11,11 +11,11 @@ KAFKA_TOPIC = os.environ.get('KAFKA_TOPIC', 'transactions')
 KAFKA_GROUP_ID = os.environ.get('KAFKA_GROUP_ID', 'postgres-consumer-group')
 KAFKA_AUTO_OFFSET_RESET = os.environ.get('KAFKA_AUTO_OFFSET_RESET', 'latest')
 
-DB_HOST = os.environ.get('DB_HOST', 'localhost')
-DB_PORT = int(os.environ.get('DB_PORT', '5432'))
-DB_NAME = os.environ.get('DB_NAME', 'banking_db')
-DB_USER = os.environ.get('DB_USER', 'postgres')
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'password')
+DB_HOST = os.environ.get('DB_HOST', '')
+DB_PORT = int(os.environ.get('DB_PORT', ''))
+DB_NAME = os.environ.get('DB_NAME', '')
+DB_USER = os.environ.get('DB_USER', '')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
 
 INSERT_QUERY = """
     INSERT INTO transactions

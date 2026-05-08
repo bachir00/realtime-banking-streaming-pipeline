@@ -3,16 +3,16 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, when
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType
 
-KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', 'localhost:9092')
+KAFKA_BROKERS = os.environ.get('KAFKA_BROKERS', '')
 KAFKA_TOPIC = os.environ.get('KAFKA_TOPIC', 'transactions')
 FRAUD_THRESHOLD = float(os.environ.get('FRAUD_AMOUNT_THRESHOLD', '3000'))
 HIGH_VALUE_THRESHOLD = float(os.environ.get('HIGH_VALUE_THRESHOLD', '4000'))
 
-DB_HOST = os.environ.get('POSTGRES_HOST', 'localhost')
+DB_HOST = os.environ.get('POSTGRES_HOST', '')
 DB_PORT = os.environ.get('POSTGRES_PORT', '5432')
-DB_NAME = os.environ.get('POSTGRES_DB', 'banking_db')
-DB_USER = os.environ.get('POSTGRES_USER', 'postgres')
-DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'password')
+DB_NAME = os.environ.get('POSTGRES_DB', '')
+DB_USER = os.environ.get('POSTGRES_USER', '')
+DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', '')
 
 POSTGRES_URL = f"jdbc:postgresql://{DB_HOST}:{DB_PORT}/{DB_NAME}"
 POSTGRES_PROPERTIES = {
